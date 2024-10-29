@@ -17,15 +17,15 @@ public class Graph {
         mainList.get(1).add(2);
         mainList.get(2).add(3);
         mainList.get(2).add(4);
-//        System.out.println("    dfsOfGraph(); " + dfsOfGraph(5, mainList));
-//        System.out.println("    detectCycle(); " + detectCycle(5, mainList));
-//        System.out.println("    bfsOfGraph(); " + bfsOfGraph(5, mainList));
+        System.out.println("    dfsOfGraph(); " + dfsOfGraph(5, mainList));
+        System.out.println("    detectCycle(); " + detectCycle(5, mainList));
+        System.out.println("    bfsOfGraph(); " + bfsOfGraph(5, mainList));
         int[][] grid = {{2, 1, 1}, {1, 1, 0}, {0, 1, 1}};
         System.out.println("    updateMatrix(); " + updateMatrixBFS(grid));
         System.out.println("    updateMatrix DFS(); " + updateMatrixDFS(grid));
         System.out.println(" rotten oranges " + orangesRottingBFS(grid));
         System.out.println("    ladderLength(); " +
-                ladderLength("hit", "cog", Arrays.asList("hot", "dot", "dog", "lot", "log", "cog")));
+                ladderLength("hit", "cog", Arrays.asList("hot", "dot", "dog", "lot", "log","cog")));
     }
 
 
@@ -353,9 +353,7 @@ public class Graph {
         Queue<String> queue = new LinkedList<>();
         queue.add(beginWord);
         int level = 1;
-
         while (!queue.isEmpty()) {
-
             int size = queue.size();
             for (int j = 0; j < size; j++) {
                 String word = queue.poll();
@@ -363,8 +361,8 @@ public class Graph {
                     char[] chars = word.toCharArray();
                     for (char ch = 'a'; ch <= 'z'; ch++) {
                         chars[i] = ch;
-                        String newWord = chars.toString();
-                        if (newWord.equals(endWord)) {
+                        String newWord = new String(chars);
+                        if (newWord.equals(endWord) && wordSet.contains(newWord)) {
                             return level + 1;
                         }
                         if (!word.equals(newWord) && wordSet.contains(newWord)) {
@@ -376,6 +374,6 @@ public class Graph {
             }
             level++;
         }
-        return level;
+        return 0;
     }
 }
