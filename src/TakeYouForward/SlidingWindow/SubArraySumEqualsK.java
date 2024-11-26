@@ -7,7 +7,7 @@ import java.util.HashMap;
  */
 class SubArraySumEqualsK {
     public static void main(String[] args) {
-        int[] nums = {1,0,1,0,1};
+        int[] nums = {1,0,0,1,0,1};
         int k = 2;
         System.out.println(subarraySum(nums, k));
     }

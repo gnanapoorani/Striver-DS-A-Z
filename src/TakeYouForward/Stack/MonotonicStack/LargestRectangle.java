@@ -1,3 +1,4 @@
+/*
 package TakeYouForward.Stack.MonotonicStack;
 
 import javafx.util.Pair;
@@ -21,7 +22,9 @@ class LargestRectangle {
         Stack<Pair<Integer, Integer>> st_NLE = new Stack<>();
         int[] PLE = new int[n];
         int[] NLE = new int[n];
-        /**PLE*/
+        */
+/**PLE*//*
+
         for (int i = 0; i < n; i++) {
             while (!st_PLE.isEmpty() && st_PLE.peek().getKey() >= heights[i]) {
                 st_PLE.pop();
@@ -30,7 +33,9 @@ class LargestRectangle {
             st_PLE.push(new Pair<>(heights[i], i));
         }
 
-        /**NLE*/
+        */
+/**NLE*//*
+
         for (int i = n - 1; i >= 0; i--) {
             while (!st_NLE.isEmpty() && st_NLE.peek().getKey() > heights[i]) {
                 st_NLE.pop();
@@ -63,4 +68,4 @@ class LargestRectangle {
         }
         return maxArea;
     }
-}
+}*/

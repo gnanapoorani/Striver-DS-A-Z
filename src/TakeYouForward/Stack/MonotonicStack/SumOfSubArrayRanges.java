@@ -1,6 +1,6 @@
 package TakeYouForward.Stack.MonotonicStack;
 
-import javafx.util.Pair;
+import TakeYouForward.Pair;
 
 import java.util.Stack;
 
@@ -27,7 +27,10 @@ class SumOfSubArrayRanges {
             PLE[i] = (!st_PLE.isEmpty()) ? st_PLE.peek().getValue() : i;
             st_PLE.push(new Pair<>(arr[i], i));
         }
-        /**NLE*/
+
+/**NLE*/
+
+
         for (int i = n - 1; i >= 0; i--) {
             while (!st_NLE.isEmpty() && st_NLE.peek().getKey() > arr[i]) {
                 st_NLE.pop();
@@ -35,7 +38,10 @@ class SumOfSubArrayRanges {
             NLE[i] = (!st_NLE.isEmpty()) ? st_NLE.peek().getValue() - i :n-i;
             st_NLE.push(new Pair<>(arr[i], i));
         }
-        /**PGE*/
+
+/**PGE*/
+
+
         st_PLE.clear();
         for (int i = 0; i < n; i++) {
             while (!st_PLE.isEmpty() && st_PLE.peek().getKey() <= arr[i]) {

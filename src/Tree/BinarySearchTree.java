@@ -83,7 +83,6 @@ class BinarySearchTree {
         if (node == null)
             return 0;
         else {
-
             // Compute the depth of each subtree
             int lDepth = height(node.left);
             int rDepth = height(node.right);

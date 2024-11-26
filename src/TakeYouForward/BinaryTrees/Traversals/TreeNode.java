@@ -1,9 +1,8 @@
 package TakeYouForward.BinaryTrees.Traversals;
 
-
+import TakeYouForward.Pair;
 
 import java.util.*;
-
 
 public class TreeNode {
     int val;
@@ -43,6 +42,8 @@ public class TreeNode {
         root.right = new TreeNode(20);
         root.right.left = new TreeNode(15);
         root.right.right = new TreeNode(7);
+        root.left.left = new TreeNode(5);
+        root.left.right = new TreeNode(74);
         System.out.println("serialize : " + serialize(root));
         System.out.println("deserialize : " + deserialize("3,9,,,20,15,,,7,,"));
         System.out.println("preorderTraversal : " + preorderTraversal(root));
@@ -66,18 +67,16 @@ public class TreeNode {
         System.out.println("maxDepth : " + maxDepth(root));
         System.out.println("isBalanced : " + isBalanced(root));
         System.out.println("diameterOfBinaryTree : " + diameterOfBinaryTree(root));
+        System.out.println("Maximum Path sum : " + maxPathSum(root));
         System.out.println("isSameTree : " + isSameTree(root, root));
         System.out.println("isSymmetric : " + isSymmetric(root));
         System.out.println("verticalTraversal : " + verticalTraversal(root));
         System.out.println("GetPathFromNode : " + getPathFromRoot(root, 7));
         System.out.println("lowestCommonAncestor : " + lowestCommonAncestor(root, root, root));
-//        System.out.println("widthOfBinaryTree : " + widthOfBinaryTree(root));
         System.out.println("changeTree : ");
         changeTree(root);
         System.out.println("distancek : " + distanceK(root, root, 2));
-
-
-
+        System.out.println("widthOfBinaryTree : " + widthOfBinaryTree(root));
 
     }
 
@@ -502,11 +501,26 @@ public class TreeNode {
         if (root == null) {
             return 0;
         }
-
         int leftHeight = diameterOfBinaryTreeHelper(root.left);
         int rightHeight = diameterOfBinaryTreeHelper(root.right);
         diameter = Math.max(diameter, leftHeight + rightHeight);
         return 1 + Math.max(leftHeight, rightHeight);
+    }
+
+    public static int maxPathSum(TreeNode root) {
+        int[] maxValue = new int[1];
+        maxPathSumHelper(root, maxValue);
+        return maxValue[0];
+    }
+
+    public static int maxPathSumHelper(TreeNode root, int[] maxValue) {
+        if (root == null) {
+            return 0;
+        }
+        int leftSum = maxPathSumHelper(root.left, maxValue);
+        int rightSum = maxPathSumHelper(root.right, maxValue);
+        maxValue[0] = Math.max(maxValue[0], root.val + leftSum + rightSum);
+        return root.val + Math.max(leftSum, rightSum);
     }
 
     public static boolean isSameTree(TreeNode p, TreeNode q) {
@@ -641,7 +655,6 @@ public class TreeNode {
     }
 
 
-
 //    public static int widthOfBinaryTree(TreeNode root) {
 //
 //        Queue<Pair<TreeNode, Integer>> q = new LinkedList<>();
@@ -705,8 +718,8 @@ public class TreeNode {
         Queue<Integer> queue = new LinkedList<>();
         queue.offer(target.val);
         visited.add(target.val);
-        while (!queue.isEmpty() && k>0) {
-            int size=queue.size();
+        while (!queue.isEmpty() && k > 0) {
+            int size = queue.size();
             for (int i = 0; i < size; i++) {
                 Set<TreeNode> adjacentNodes = parentMap.get(queue.peek());
                 queue.poll();
@@ -742,27 +755,29 @@ public class TreeNode {
         buildParentMap(root.right, root);
     }
 
-    TreeNode prev=null;
+    TreeNode prev = null;
+
     public void flatten(TreeNode root) {
 
-        if(root==null){
+        if (root == null) {
             return;
         }
         flatten(root.left);
         flatten(root.right);
 
-        root.left=null;
-        root.right=prev;
-        prev=root;
+        root.left = null;
+        root.right = prev;
+        prev = root;
 
     }
+
     public static String serialize(TreeNode root) {
         if (root == null) return "";
         return root.val + "," + serialize(root.left) + "," + serialize(root.right);
     }
 
     public static TreeNode deserialize(String data) {
-        Queue<String> queue = new LinkedList<>(Arrays.asList(data.split(",",-1)));
+        Queue<String> queue = new LinkedList<>(Arrays.asList(data.split(",", -1)));
         return helper(queue);
     }
 
@@ -775,4 +790,30 @@ public class TreeNode {
         return root;
     }
 
+    public static int widthOfBinaryTree(TreeNode root) {
+        int max = 0;
+        Queue<Pair<TreeNode, Integer>> queue = new LinkedList<>();
+        queue.offer(new Pair<>(root, 0));
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            int first_min = queue.peek().getValue();
+            int last_min = 0;
+            for (int i = 0; i < size; i++) {
+                if (i == size - 1) {
+                    last_min = queue.peek().getValue();
+                }
+                TreeNode temp = queue.peek().getKey();
+                int index = queue.peek().getValue() - first_min;
+                if (temp.left != null) {
+                    queue.offer(new Pair<>(temp.left, (2 * index) + 1));
+                }
+                if (temp.right != null) {
+                    queue.offer(new Pair<>(temp.right, (2 * index) + 2));
+                }
+                queue.poll();
+            }
+            max = Math.max(max, (last_min - first_min)+1);
+        }
+        return max;
+    }
 }

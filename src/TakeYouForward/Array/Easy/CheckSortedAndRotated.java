@@ -1,3 +1,5 @@
+package TakeYouForward.Array.Easy;
+
 import java.util.Arrays;
 
 class CheckSortedAndRotated {

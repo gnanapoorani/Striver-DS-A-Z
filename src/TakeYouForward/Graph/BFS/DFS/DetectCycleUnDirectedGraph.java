@@ -1,6 +1,5 @@
-package TakeYouForward.Graph.BFS.DFS;
 
-import javafx.util.Pair;
+package TakeYouForward.Graph.BFS.DFS;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,13 +53,34 @@ class DetectCycleUnDirectedGraph {
         return false;
     }
 
-    public static boolean isCycleBFS(ArrayList<ArrayList<Integer>> adj) {
-        int length = adj.size();
-        int[] visited = new int[length + 1];
-        Arrays.fill(visited, -1);
+    // Function to detect cycle in an undirected graph with checking parent node concept
+    public static  boolean isCycleBFS(ArrayList<ArrayList<Integer>> adj) {
+        // Code here
+        int[] vis = new int[adj.size()];
         for (int i = 0; i < adj.size(); i++) {
-            if (visited[i] == -1) {
-                if (BFSCheck(adj, visited, 0, -1)) {
+            if (vis[i] != 1) {
+                if (detectCycle(adj, i, vis)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public static  boolean detectCycle(ArrayList<ArrayList<Integer>> adj, int x, int[] vis) {
+        Queue<int[]> q = new LinkedList<>();
+        q.add(new int[]{x, -1});
+        vis[x] = 1;
+        while (!q.isEmpty()) {
+            int parent = q.peek()[1];
+            int adjacent = q.peek()[0];
+            q.poll();
+            for (int i : adj.get(adjacent)) {
+                if (vis[i] != 1) {
+                    vis[i] = 1;
+                    q.add(new int[]{i, adjacent});
+                } else if (i != parent) {
                     return true;
                 }
             }
@@ -68,26 +88,40 @@ class DetectCycleUnDirectedGraph {
         return false;
     }
 
-    public static boolean BFSCheck(ArrayList<ArrayList<Integer>> adj, int[] visited, int currentNode, int parentNode) {
-        Queue<Pair<Integer, Integer>> queue = new LinkedList<>();
-        queue.add(new Pair<>(currentNode, parentNode));
 
-        while (!queue.isEmpty()) {
-            Pair<Integer, Integer> visitedNode = queue.poll();
-            int node = visitedNode.getKey();
-            int parent = visitedNode.getValue();
-            for (int adjacentNode : adj.get(node)) {
-                if (visited[adjacentNode] == -1) {
-                    queue.add(new Pair<>(adjacentNode, node));
-                    visited[adjacentNode] = 1;
-                } else {
-                    if (adjacentNode != parent) {
-                        return true;
-                    }
+    /**
+     * Without using parent node check
+     */
+    public static boolean isCyclicConnected(ArrayList<Integer>[] adj, int s, int V, boolean[] visited) {
+        Queue<Integer> q = new LinkedList<>();
+        q.add(s);
+
+        while (!q.isEmpty()) {
+            int v = q.poll();
+
+            if (visited[v]) {
+                return true; // Cycle detected
+            }
+
+            visited[v] = true; // Mark as visited
+
+            for (int it : adj[v]) {
+                if (!visited[it]) {
+                    q.add(it);
                 }
             }
         }
         return false;
     }
 
+    public static boolean isCyclicDisconnected(ArrayList<Integer>[] adj, int V) {
+        boolean[] visited = new boolean[V];
+
+        for (int i = 0; i < V; i++) {
+            if (!visited[i] && isCyclicConnected(adj, i, V, visited)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

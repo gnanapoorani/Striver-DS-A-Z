@@ -42,7 +42,8 @@ class FractionalKnapsack {
 
     static double fractionalKnapsack(int w, Item arr[], int n) {
         Arrays.sort(arr, new ItemComparator());
-//        Arrays.sort(arr, (a,b) ->Double.compare((double)b.value/b.weight, (double)a.value/a.weight));
+        Arrays.sort(arr, (a,b) ->Integer.compare(b.value/b.weight, a.value/a.weight));
+        Arrays.sort(arr, (a,b) ->Double.compare((double)b.value/b.weight, (double)a.value/a.weight));
         int curWeight = 0;
         double curValue = 0;
         for (Item item : arr) {

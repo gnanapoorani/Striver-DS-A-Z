@@ -1,6 +1,7 @@
 package TakeYouForward.Stack.MonotonicStack;
 
-import javafx.util.Pair;
+
+import TakeYouForward.Pair;
 
 import java.util.Stack;
 

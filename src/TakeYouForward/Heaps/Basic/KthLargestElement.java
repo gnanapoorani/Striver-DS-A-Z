@@ -1,36 +1,44 @@
 package TakeYouForward.Heaps.Basic;
 
 import java.util.PriorityQueue;
+import java.util.Queue;
 
 public class KthLargestElement {
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         int a[]
-                = { 11, 3, 2, 1, 15, 5, 4, 45, 88, 96, 50, 45 };
-        int n = a.length;
+                = {11, 3, 2, 1, 15, 5, 4, 45, 88, 96, 50, 45};
         int k = 3;
         System.out.print(k + " largest elements are : ");
         // Function Call
-        kLargest(a, n, k);
+//        kLargest(a, k);
+        System.out.println(findKthLargest(a, k));
     }
 
-//    public static int findKthLargest(int[] nums, int k) {
-//        PriorityQueue<Integer> maxHeap = new PriorityQueue<>();
-//
-//
-//    }
+    public static int findKthLargest(int[] nums, int k) {
+        Queue<Integer> pq = new PriorityQueue<>((a, b) -> b - a);
+
+        for(int num : nums) {
+            pq.add(num);
+        }
+
+        while(k> 1) {
+            pq.poll();
+            k--;
+        }
+
+        return pq.peek();
+    }
 
     // Function to find k largest array element
-    static void kLargest(int a[], int n, int k)
-    {
+    static void kLargest(int a[], int k) {
+        int n = a.length;
         // Implementation using
         // a Priority Queue
         PriorityQueue<Integer> pq
                 = new PriorityQueue<Integer>();
 
         for (int i = 0; i < n; ++i) {
-
             // Insert elements into
             // the priority queue
             pq.add(a[i]);
@@ -42,13 +50,11 @@ public class KthLargestElement {
             }
         }
 
-        // Print the k largest element
-        while (!pq.isEmpty()) {
-            System.out.print(pq.peek() + " ");
+        // Print the kth largest element
+        while (pq.size() > 1) {
             pq.poll();
+            k--;
         }
-        System.out.println();
+        System.out.print(pq.peek() + " ");
     }
-    // Driver Code
-
 }

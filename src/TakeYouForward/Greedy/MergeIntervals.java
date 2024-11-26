@@ -7,10 +7,8 @@ import java.util.List;
 //2147483647 - Int Max value
 //-2147483647 - 1 int min value
 class MergeIntervals {
-
-
     public static void main(String[] args) {
-        int intervals[][] = {{1, 3}, {6, 9}};
+        int intervals[][] = {{8,10},{1,3},{15,18},{2,6}};
         int result[][] = merge(intervals);
         System.out.println(result);
     }
