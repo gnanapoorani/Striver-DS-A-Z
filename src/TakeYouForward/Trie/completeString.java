@@ -1,10 +1,17 @@
+/*
 package TakeYouForward.Trie;
 
 
-import javafx.util.Pair;
-
 import java.util.*;
+class Pair {
+    int key;
+    int value;
 
+    Pair(int key,int value){
+        this.key=key;
+        this.value=value;
+    }
+}
 class Trie1 {
     static TrieNode1 root;
 
@@ -85,3 +92,4 @@ class Trie1 {
         return ans;
     }
 }
+*/
