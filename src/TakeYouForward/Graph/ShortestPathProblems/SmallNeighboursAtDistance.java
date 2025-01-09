@@ -13,7 +13,7 @@ import java.util.Arrays;
 class SmallNeighboursAtDistance {
 
     public static void main(String[] args) {
-        int[][] edges = {{0,1,2},{0,4,8},{1,2,3},{1,4,2},{2,3,1},{3,4,1}};
+        int[][] edges = {{0, 1, 2}, {0, 4, 8}, {1, 2, 3}, {1, 4, 2}, {2, 3, 1}, {3, 4, 1}};
         System.out.println(findTheCity(5, edges, 2));
     }
 
@@ -25,7 +25,7 @@ class SmallNeighboursAtDistance {
             Arrays.fill(row, 10001);
         }
 
-        for (int i=0;i<n;i++) {
+        for (int i = 0; i < n; i++) {
             distance[i][i] = 0;
         }
         for (int[] edge : edges) {
@@ -41,16 +41,16 @@ class SmallNeighboursAtDistance {
             }
         }
         for (int i = 0; i < n; i++) {
-            int count=0;
-            for(int j=0;j<n;j++){
-                if(distance[i][j]<=distanceThreshold){
+            int count = 0;
+            for (int j = 0; j < n; j++) {
+                if (distance[i][j] <= distanceThreshold) {
                     count++;
                 }
             }
-           if(count<=maxCount){
-               maxCount=count;
-               city=i;
-           }
+            if (count <= maxCount) {
+                maxCount = count;
+                city = i;
+            }
         }
 
         return city;
